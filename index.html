@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة لندن العائلية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .trip-info {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .trip-info h2 {
+            color: #e74c3c;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .flight-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .flight-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .flight-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .hotel-info {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .day-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .day-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .day-content {
+            padding: 25px;
+        }
+
+        .activity {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(108, 99, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .activity:hover {
+            background: rgba(108, 99, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .activity h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .activity p {
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+
+        .meal-suggestion {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            color: #8b4513;
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(252, 182, 159, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .meal-suggestion:hover {
+            transform: scale(1.05);
+        }
+
+        .location-link {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+        }
+
+        .location-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.5);
+        }
+
+        .location-link::before {
+            content: "📍 ";
+            margin-left: 3px;
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: #2c3e50;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(255, 154, 158, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .important-note h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .edit-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .edit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .editable {
+            position: relative;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .editable:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .editable.editing {
+            background: rgba(231, 76, 60, 0.1);
+            border: 2px dashed #e74c3c;
+        }
+
+        .editable input, .editable textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .flight-info {
+                grid-template-columns: 1fr;
+            }
+
+            .day-content {
+                padding: 15px;
+            }
+
+            .activity {
+                padding: 12px;
+            }
+        }
+
+        .floating-edit-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .toggle-edit {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .toggle-edit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-edit-panel">
+        <button class="toggle-edit" onclick="toggleEditMode()">🖊️ تعديل المحتوى</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="editable" onclick="editElement(this)">🇬🇧 رحلة لندن العائلية</h1>
+            <p class="editable" onclick="editElement(this)">السلام عليكم ورحمة الله وبركاته - رحلة مباركة إن شاء الله</p>
+        </div>
+
+        <div class="trip-info">
+            <h2>📅 معلومات الرحلة</h2>
+            
+            <div class="flight-info">
+                <div class="flight-card">
+                    <h3>✈️ رحلة الذهاب</h3>
+                    <p><strong>التاريخ:</strong> <span class="editable" onclick="editElement(this)">الجمعة 19/9/2025</span></p>
+                    <p><strong>الإقلاع:</strong> <span class="editable" onclick="editElement(this)">11:55 صباحاً</span></p>
+                    <p><strong>الخروج من المنزل:</strong> <span class="editable" onclick="editElement(this)">7:00 صباحاً</span></p>
+                    <p><strong>الوصول لندن:</strong> <span class="editable" onclick="editElement(this)">5:25 مساءً</span></p>
+                </div>
+
+                <div class="flight-card">
+                    <h3>🏠 رحلة العودة</h3>
+                    <p><strong>التاريخ:</strong> <span class="editable" onclick="editElement(this)">الجمعة 26/9/2025</span></p>
+                    <p><strong>الإقلاع:</strong> <span class="editable" onclick="editElement(this)">10:25 مساءً</span></p>
+                    <p><strong>الخروج من الفندق:</strong> <span class="editable" onclick="editElement(this)">6:00 مساءً</span></p>
+                    <p><strong>الوصول الرياض:</strong> <span class="editable" onclick="editElement(this)">7:10 صباحاً</span></p>
+                </div>
+            </div>
+
+            <div class="hotel-info">
+                <h3>🏨 الإقامة</h3>
+                <p><strong class="editable" onclick="editElement(this)">The Tower Hotel by Thistle</strong></p>
+                <p class="editable" onclick="editElement(this)">3 غرف نوم - شخصين بالغين وطفل في كل غرفة</p>
+                <a href="https://maps.google.com/maps?q=The+Tower+Hotel+London+St+Katharine's+Way" target="_blank" class="location-link">موقع الفندق</a>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🌙 يوم الجمعة 19/9 - يوم الوصول</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>🏨 دخول الفندق</h4>
+                    <p>الوصول والاستقرار في الغرف</p>
+                </div>
+                <div class="activity">
+                    <h4>🍽️ العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">مطعم لبناني أصيل - Maroush أو Al Waha</p>
+                    <div class="meal-suggestion">مطعم مروش</div>
+                    <a href="https://maps.google.com/maps?q=Maroush+Restaurant+London" target="_blank" class="location-link">مروش</a>
+                    <div class="meal-suggestion">مطعم الواحة</div>
+                    <a href="https://maps.google.com/maps?q=Al+Waha+Restaurant+London" target="_blank" class="location-link">الواحة</a>
+                    <div class="meal-suggestion">Dishoom (هندي)</div>
+                    <a href="https://maps.google.com/maps?q=Dishoom+Covent+Garden+London" target="_blank" class="location-link">ديشوم</a>
+                </div>
+                <div class="activity">
+                    <h4>🛒 التسوق</h4>
+                    <p>التسوق من Tesco للاحتياجات ونواقص الغرف</p>
+                    <a href="https://maps.google.com/maps?q=Tesco+near+Tower+Bridge+London" target="_blank" class="location-link">تيسكو القريب</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🌅 يوم السبت 20/9 - استكشاف المنطقة</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>☕ الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور في الفندق أو مقهى محلي</p>
+                    <div class="meal-suggestion">فطور الفندق</div>
+                    <div class="meal-suggestion">Pret A Manger</div>
+                    <div class="meal-suggestion">Costa Coffee</div>
+                </div>
+                <div class="activity">
+                    <h4>🚶‍♂️ جولة في المنطقة</h4>
+                    <p>التعرف على منطقة الفندق وجسر Tower Bridge القريب</p>
+                    <a href="https://maps.google.com/maps?q=Tower+Bridge+London" target="_blank" class="location-link">جسر البرج</a>
+                    <a href="https://maps.google.com/maps?q=Tower+of+London" target="_blank" class="location-link">برج لندن</a>
+                </div>
+                <div class="activity">
+                    <h4>🌆 العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">مطعم تركي أو عربي في المنطقة</p>
+                    <div class="meal-suggestion">Mangal 2 (تركي)</div>
+                    <div class="meal-suggestion">The Ivy Tower Bridge</div>
+                    <div class="meal-suggestion">Zedel (فرنسي)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🚂 يوم الأحد 21/9 - رحلة ريتشموند</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>🥞 الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور سريع قبل الانطلاق</p>
+                    <div class="meal-suggestion">Starbucks</div>
+                    <div class="meal-suggestion">Paul Bakery</div>
+                    <div class="meal-suggestion">Gail's</div>
+                </div>
+                <div class="activity">
+                    <h4>🌳 جولة ريتشموند</h4>
+                    <p>القطار من محطة Waterloo (30 دقيقة)</p>
+                    <a href="https://maps.google.com/maps?q=Waterloo+Station+London" target="_blank" class="location-link">محطة واترلو</a>
+                    <a href="https://maps.google.com/maps?q=Richmond+Station+London" target="_blank" class="location-link">محطة ريتشموند</a>
+                    <p>• جولة في المدينة التاريخية</p>
+                    <a href="https://maps.google.com/maps?q=Richmond+upon+Thames+Historic+Town+Centre" target="_blank" class="location-link">وسط ريتشموند</a>
+                    <p>• تأجير قوارب إن أمكن</p>
+                    <a href="https://maps.google.com/maps?q=Richmond+Boat+Hire+Thames" target="_blank" class="location-link">تأجير القوارب</a>
+                    <p>• زيارة الحديقة أو المحمية</p>
+                    <a href="https://maps.google.com/maps?q=Richmond+Park+London" target="_blank" class="location-link">حديقة ريتشموند</a>
+                    <p>• إحضار سناك للنزهة</p>
+                    <p>• العودة بالقارب (20 باوند للشخص، ساعة واحدة)</p>
+                    <a href="https://maps.google.com/maps?q=Westminster+Pier+Thames+Boat" target="_blank" class="location-link">رصيف وستمنستر</a>
+                </div>
+                <div class="activity">
+                    <h4>🍴 العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">مطعم بإطلالة على التايمز</p>
+                    <div class="meal-suggestion">Richmond Hill Hotel</div>
+                    <div class="meal-suggestion">The Dysart Petersham</div>
+                    <div class="meal-suggestion">مطعم عربي في ريتشموند</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🎢 يوم الاثنين 22/9 - يوم المغامرات</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>🍳 الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور إنجليزي تقليدي</p>
+                    <div class="meal-suggestion">Bill's Restaurant</div>
+                    <div class="meal-suggestion">The Breakfast Club</div>
+                    <div class="meal-suggestion">Dishoom (فطور هندي)</div>
+                </div>
+                <div class="activity">
+                    <h4>🎯 خيارات اليوم</h4>
+                    <p><strong>الخيار الأول:</strong> الزحليقة الطويلة من Victoria Station إلى Chatham Medway (40 دقيقة)</p>
+                    <a href="https://maps.google.com/maps?q=Victoria+Station+London" target="_blank" class="location-link">محطة فيكتوريا</a>
+                    <a href="https://maps.google.com/maps?q=Chatham+Kent+UK" target="_blank" class="location-link">شاتهام</a>
+                    <p><strong>الخيار الثاني:</strong> حديقة الحيوان (قريب من Hyde Park)</p>
+                    <a href="https://maps.google.com/maps?q=London+Zoo+Regent's+Park" target="_blank" class="location-link">حديقة حيوان لندن</a>
+                    <p><strong>الخيار الثالث:</strong> الحديقة اليابانية</p>
+                    <a href="https://maps.google.com/maps?q=Kyoto+Garden+Holland+Park+London" target="_blank" class="location-link">الحديقة اليابانية</a>
+                    <p><strong>الخيار الرابع:</strong> الملاهي (على الحساب الشخصي)</p>
+                    <a href="https://maps.google.com/maps?q=Thorpe+Park+Surrey" target="_blank" class="location-link">ثورب بارك</a>
+                    <a href="https://maps.google.com/maps?q=Chessington+World+of+Adventures" target="_blank" class="location-link">تشيسنغتون</a>
+                </div>
+                <div class="activity">
+                    <h4>🥘 العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">مطعم حسب المنطقة المختارة</p>
+                    <div class="meal-suggestion">Hawksmoor (ستيك)</div>
+                    <div class="meal-suggestion">Yauatcha (صيني راقي)</div>
+                    <div class="meal-suggestion">Sketch (تجربة فريدة)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🇸🇦 يوم الثلاثاء 23/9 - اليوم الوطني</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>🌅 الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور احتفالي باليوم الوطني</p>
+                    <div class="meal-suggestion">الفندق (فطور خاص)</div>
+                    <div class="meal-suggestion">مطعم عربي</div>
+                    <div class="meal-suggestion">Roka (ياباني راقي)</div>
+                </div>
+                <div class="activity">
+                    <h4>🛍️ جولة التسوق</h4>
+                    <p>• Borough Market (سوق الطعام التاريخي)</p>
+                    <a href="https://maps.google.com/maps?q=Borough+Market+London" target="_blank" class="location-link">سوق البورو</a>
+                    <p>• Harrods (المتجر الشهير)</p>
+                    <a href="https://maps.google.com/maps?q=Harrods+Knightsbridge+London" target="_blank" class="location-link">هارودز</a>
+                    <p>• Oxford Street (شارع التسوق الرئيسي)</p>
+                    <a href="https://maps.google.com/maps?q=Oxford+Street+London" target="_blank" class="location-link">شارع أوكسفورد</a>
+                    <p>• Hyde Park (للاستراحة)</p>
+                    <a href="https://maps.google.com/maps?q=Hyde+Park+London" target="_blank" class="location-link">هايد بارك</a>
+                </div>
+                <div class="activity">
+                    <h4>🌃 العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">احتفال باليوم الوطني - فريج صويلح أو مطعم سعودي</p>
+                    <div class="meal-suggestion">مطعم سعودي في لندن</div>
+                    <div class="meal-suggestion">Maroush الكبير</div>
+                    <div class="meal-suggestion">Al Bustan (لبناني راقي)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🏖️ يوم الأربعاء 24/9 - رحلة ساحلية</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>☕ الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور مبكر للرحلة</p>
+                    <div class="meal-suggestion">فطور الفندق</div>
+                    <div class="meal-suggestion">Pret A Manger</div>
+                    <div class="meal-suggestion">Leon (صحي)</div>
+                </div>
+                <div class="activity">
+                    <h4>🌊 خيارات الرحلة</h4>
+                    <p><strong>الخيار الأول:</strong> Brighton (ساعة من لندن) - مدينة ساحلية جميلة</p>
+                    <a href="https://maps.google.com/maps?q=Brighton+Beach+UK" target="_blank" class="location-link">شاطئ برايتون</a>
+                    <a href="https://maps.google.com/maps?q=Brighton+Pier+UK" target="_blank" class="location-link">رصيف برايتون</a>
+                    <p><strong>الخيار الثاني:</strong> White Cliffs of Dover (الجروف البيضاء) - مناظر طبيعية خلابة</p>
+                    <a href="https://maps.google.com/maps?q=White+Cliffs+of+Dover+Kent" target="_blank" class="location-link">الجروف البيضاء</a>
+                    <p><strong>خيارات أخرى:</strong> Windsor Castle، Canterbury، أو Stratford-upon-Avon</p>
+                    <a href="https://maps.google.com/maps?q=Windsor+Castle+UK" target="_blank" class="location-link">قلعة وندسور</a>
+                    <a href="https://maps.google.com/maps?q=Canterbury+Cathedral+UK" target="_blank" class="location-link">كاتدرائية كانتربري</a>
+                    <a href="https://maps.google.com/maps?q=Stratford+upon+Avon+UK" target="_blank" class="location-link">ستراتفورد</a>
+                </div>
+                <div class="activity">
+                    <h4>🍽️ العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">مطعم في المدينة المختارة أو العودة للندن</p>
+                    <div class="meal-suggestion">Fish & Chips تقليدي</div>
+                    <div class="meal-suggestion">مطعم محلي في المدينة</div>
+                    <div class="meal-suggestion">العودة للندن للعشاء</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>🛍️ يوم الخميس 25/9 - التسوق وهاري بوتر</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>🥐 الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور هادئ</p>
+                    <div class="meal-suggestion">Hotel Breakfast</div>
+                    <div class="meal-suggestion">Paul (فرنسي)</div>
+                    <div class="meal-suggestion">The Ivy</div>
+                </div>
+                <div class="activity">
+                    <h4>🛒 أنشطة اليوم</h4>
+                    <p><strong>الصباح:</strong> التسوق النهائي والهدايا التذكارية</p>
+                    <a href="https://maps.google.com/maps?q=Covent+Garden+London" target="_blank" class="location-link">كوفنت جاردن</a>
+                    <a href="https://maps.google.com/maps?q=Regent+Street+London" target="_blank" class="location-link">شارع ريجنت</a>
+                    <p><strong>بعد الظهر:</strong> عالم هاري بوتر (Warner Bros. Studio Tour)</p>
+                    <p>• الحجز المسبق مطلوب</p>
+                    <p>• الانتقال بالباص من Watford Junction</p>
+                    <a href="https://maps.google.com/maps?q=Watford+Junction+Station" target="_blank" class="location-link">محطة واتفورد</a>
+                    <a href="https://maps.google.com/maps?q=Warner+Bros+Studio+Tour+Harry+Potter+Watford" target="_blank" class="location-link">استوديوهات هاري بوتر</a>
+                    <p>• جولة تستغرق 3-4 ساعات</p>
+                </div>
+                <div class="activity">
+                    <h4>🍴 العشاء</h4>
+                    <p class="editable" onclick="editElement(this)">عشاء وداع لندن</p>
+                    <div class="meal-suggestion">Gordon Ramsay Restaurant</div>
+                    <div class="meal-suggestion">Aqua Shard (مع إطلالة)</div>
+                    <div class="meal-suggestion">مطعم عربي مميز</div>
+                </div>
+                <div class="activity">
+                    <h4>🧳 الاستعداد</h4>
+                    <p>ترتيب الحقائب والاستعداد للمغادرة</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h3>✈️ يوم الجمعة 26/9 - يوم المغادرة</h3>
+            </div>
+            <div class="day-content">
+                <div class="activity">
+                    <h4>🍽️ الفطور</h4>
+                    <p class="editable" onclick="editElement(this)">فطور الوداع</p>
+                    <div class="meal-suggestion">فطور الفندق الأخير</div>
+                    <div class="meal-suggestion">مقهى قريب من الفندق</div>
+                </div>
+                <div class="activity">
+                    <h4>🏨 الخروج من الفندق</h4>
+                    <p>تسوية الحساب والانطلاق للمطار في الساعة 6 مساءً</p>
+                    <a href="https://maps.google.com/maps?q=Heathrow+Airport+London" target="_blank" class="location-link">مطار هيثرو</a>
+                    <a href="https://maps.google.com/maps?directions/The+Tower+Hotel+London/Heathrow+Airport" target="_blank" class="location-link">الطريق للمطار</a>
+                </div>
+                <div class="activity">
+                    <h4>🛫 السفر</h4>
+                    <p>الإقلاع 10:25 مساءً والوصول للرياض 7:10 صباحاً</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="important-note">
+            <h3>📿 تذكيرات مهمة</h3>
+            <p class="editable" onclick="editElement(this)"><strong>الصلاة الصلاة الصلاة</strong> في كل وقت ومكان</p>
+            <p class="editable" onclick="editElement(this)">التحلي بالصبر والتعاون مع الجميع</p>
+            <p class="editable" onclick="editElement(this)">الحرص على السلامة والبقاء مع المجموعة</p>
+            <p class="editable" onclick="editElement(this)">الاستمتاع بالرحلة وصنع ذكريات جميلة</p>
+        </div>
+    </div>
+
+    <script>
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const button = document.querySelector('.toggle-edit');
+            if (editMode) {
+                button.textContent = '💾 حفظ التغييرات';
+                button.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                showEditableElements();
+            } else {
+                button.textContent = '🖊️ تعديل المحتوى';
+                button.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a24)';
+                hideEditableElements();
+            }
+        }
+
+        function showEditableElements() {
+            const editables = document.querySelectorAll('.editable');
+            editables.forEach(el => {
+                el.style.border = '2px dashed #3498db';
+                el.style.background = 'rgba(52, 152, 219, 0.1)';
+                el.title = 'اضغط للتعديل';
+                el.style.cursor = 'pointer';
+            });
+        }
+
+        function hideEditableElements() {
+            const editables = document.querySelectorAll('.editable');
+            editables.forEach(el => {
+                el.style.border = 'none';
+                el.style.background = 'transparent';
+                el.title = '';
+                el.style.cursor = 'default';
+            });
+        }
+
+        function editElement(element) {
+            if (!editMode) return;
+            
+            if (element.classList.contains('editing')) return;
+            
+            const currentText = element.textContent || element.innerHTML;
+            element.classList.add('editing');
+            
+            // Create input field
+            const isMultiline = currentText.length > 50 || currentText.includes('\n');
+            const input = document.createElement(isMultiline ? 'textarea' : 'input');
+            
+            if (isMultiline) {
+                input.rows = 3;
+                input.style.resize = 'vertical';
+            } else {
+                input.type = 'text';
+            }
+            
+            input.value = currentText;
+            input.style.width = '100%';
+            input.style.fontFamily = 'inherit';
+            input.style.fontSize = 'inherit';
+            input.style.color = 'inherit';
+            input.style.background = 'white';
+            input.style.border = '2px solid #3498db';
+            input.style.borderRadius = '5px';
+            input.style.padding = '8px';
+            
+            // Replace element content with input
+            element.innerHTML = '';
+            element.appendChild(input);
+            input.focus();
+            input.select();
+            
+            // Save on Enter or blur
+            function saveEdit() {
+                const newText = input.value;
+                element.innerHTML = newText;
+                element.classList.remove('editing');
+                element.style.border = '2px dashed #3498db';
+                element.style.background = 'rgba(52, 152, 219, 0.1)';
+            }
+            
+            input.addEventListener('blur', saveEdit);
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    saveEdit();
+                } else if (e.key === 'Escape') {
+                    element.innerHTML = currentText;
+                    element.classList.remove('editing');
+                    element.style.border = '2px dashed #3498db';
+                    element.style.background = 'rgba(52, 152, 219, 0.1)';
+                }
+            });
+        }
+
+        // Add click handlers to meal suggestions for easy editing
+        document.addEventListener('DOMContentLoaded', function() {
+            const mealSuggestions = document.querySelectorAll('.meal-suggestion');
+            mealSuggestions.forEach(suggestion => {
+                suggestion.addEventListener('click', function() {
+                    if (editMode) {
+                        editElement(this);
+                    }
+                });
+                suggestion.classList.add('editable');
+            });
+        });
+
+        // Add some interactive animations
+        document.querySelectorAll('.day-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add floating animation to flight cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        });
+
+        document.querySelectorAll('.flight-card, .day-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
